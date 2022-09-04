@@ -1,0 +1,111 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  {% include 'base1.html' %}
+  <title>JourneyGo - Friends</title>  
+  <link rel="stylesheet" href="{% static "css/friendlist-styles.css" %}">
+</head>
+
+
+<body>
+  {% include 'base2.html' %}
+
+
+  <!-- Friendlist -->
+  <section class="f-list">
+
+    <h2 class="friend-list-title">Friends of {{ userAcc.firstName }}</h2>
+    <p>Gather up and start your journey!</p>
+    <div>
+      <button class="btn bnt-lg btn-block btn-success" type="button" data-bs-toggle="modal" data-bs-target="#add"><i class="fa-solid fa-plus"></i> Add new friend</button>
+      <div class="modal fade" tabindex="-1" id="add">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Add Friends</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p>Enter App ID: </p>
+              <form action="" method="POST">
+                <input type="text" name="addedID"><br><br>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <input type="submit" name="Add" value="Add" class="btn btn-primary">
+              </form>
+            </div>
+            
+              
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="row">
+      <!-- card -->
+      {% for f, id in ffid %}
+      <div class="friend-col col-lg-4 col-md-6">
+        <div class="card">
+          <div class="card-header">
+            <h3>{{ f.firstName }}</h3>
+          </div>
+          <div class="card-body">
+            <img class="photo" src={{ f.pic }} alt="friend-pic" style="width:100px !important;height:100px !important;">
+            <p>#{{ f.hashtag }}</p>
+            <!-- Profile Btn-->
+            <button type="button" class="btn bnt-lg btn-block btn-outline-dark" data-bs-toggle="modal" data-bs-target="#profileModal{{ id }}"><i class="fa-solid fa-id-card"></i>
+              Profile
+            </button>
+            <!-- Profile Modal -->
+            <div class="modal fade"  id="profileModal{{ id }}" tabindex="-1" aria-labelledby="profileModal" aria-hidden="true">
+              <div class=" modal-dialog" id="{{ id }}">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="profileModal{{ id }}">{{ f.firstName }} {{ f.lastName }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <p>App ID: {{ id }}</p>
+                    <p>E-mail: {{ f.email }}</p>
+                    <p>Self-Intro: {{ f.intro }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Unfriend Btn-->
+            <button class="btn bnt-lg btn-block btn-dark" type="button" data-bs-toggle="modal" data-bs-target="#unfriendModal{{id}}"><i class="fa-solid fa-user-xmark"></i>
+              Unfriend
+            </button>
+            <!-- Unfriend Modal -->
+            <div class="modal fade" id="unfriendModal{{id}}" tabindex="-1" aria-labelledby="unfriendModal" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="unfriendModal{{id}}">Unfriend</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <p>Are you sure you want to remove {{ f.firstName }} {{ f.lastName }} from your friend list?</p>
+                    <form action="" method="POST">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                      <input type="hidden" name="exf"    value= {{f.firstName}}>
+                      <input type="hidden" name="exl"    value= {{f.lastName}}>
+                      <input type="submit" name="remove" value="Yes, remove." class="btn btn-primary">
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- End of Modal -->
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+  </section>
+</body>
+
+</html>

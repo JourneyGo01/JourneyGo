@@ -1,0 +1,25 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {% include 'base1.html' %}
+  <title>JourneyGo - Login</title>
+</head>
+<body>
+  {% include 'base2.html' %}
+  <form class="site-form" method="post">
+    {% csrf_token %}
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Username</label>
+          <input type="text" class="form-control" name="username" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">Password</label>
+          <input type="password" class="form-control" name="password">
+        </div>
+    <input type="submit" value="SIGN-IN">
+</form> 
+</body>
+</html>
+
+
